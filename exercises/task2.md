@@ -108,4 +108,9 @@ all your APIs should have a prefix - /api
   - don't forget that this is also a protected route and so cookie auth_token needs validation
 
 
+NOTE:
+for storing posts, user details...
+you can simple use javascript objects and arrays
+
+as an optional task, I recommend you to try working with databases such as mysql once you are complete
 
