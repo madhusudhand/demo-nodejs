@@ -1,3 +1,4 @@
+# PRE EXERCISE
 
 1. understand express
 2. create a sample app / express-generator
@@ -10,50 +11,101 @@
     /userprofile - return JSON (user object)
 
 
-## Exericise extension
+# EXERCISE
+----------
 
-login - local storage (cookies)
-auth_token: sha1(username,password)
+create a site with following pages.
 
-Mock Facebook
-UI
+## page 0: (landing page)
 
-header - logo[left], email[right], signout[right]
-body
+route: /
 
------------
-<textarea>
-<button>
------------
+-------------------------------------
+logo                    email signout
+-------------------------------------
 
-...
-new post
-  yourusername: text
+        Some welcome message
+	[LOGIN] or [MY PROFILE]
 
-post1
-  username: text
+-------------------------------------
 
-post2
-
-...
+note, in header you show email if user logged in, else show login
+in content, have login or my profile buttons based on the session again
 
 
+## page 1: (login page)
 
-RESTful
+route: /login
 
-create an API
+if user clicks login in the previous page
+check if user has already logged in, if so redirect him to page 2 (user profile)
+if not, show the following form
 
-common prefix - /api
+-------------------------------------
+logo			
+-------------------------------------
 
-/user
-  /details - GET, store to local storage
-  / - POST
+	username ___________
+	password ___________
+	[Login]
 
-/posts
-  / - GET [{}, {}]
-  /:id - GET - {}
-  /new - POST {username, content}
-  /:id - PUT - update it
+-------------------------------------
+
+## page 2:
+
+route: /:username
+
+when you visit the route, check session again
+if not loggedin, take user to login page
+
+-------------------------------------
+logo			email signout
+-------------------------------------
+
+	new post
+	[		  ]  <- text input
+	[POST]  <- button
+	-------------------
+
+	post1
+	username: post details
+	in multiple lines
+
+	post2
+	username: post details
+        in multiple lines
+
+	post3....
+
+-------------------------------------
+
+
+RESTful API design
+all your APIs should have a prefix - /api
+
+/api/user
+  - GET, returns the details of user like email, fullname etc..
+  - helpful to show in header
+  - how to get current user? with the help of cookie username
+  - this must be a protected route, so you will need a middleware to validate auth_token
+
+/api/auth
+  - POST, accepts username, password and sets cookies [username, auth_token] if successfull
+  - returns error if invalid username or password
+  - use this in page1 (login page) to submit un, pw
+  - this must be open route
+
+/api/posts
+  - this is a GET, retuns list of posts for the given user
+  - how do you identify the current user? with the help of cookie username.
+  - you need to validate auth_token in a middleware as this route is protected
+  - you will be using this in page2 to fetch and display posts
+
+/api/posts/new
+  - POST, takes post content as input and returns success or failure
+  - if successfull, append the new post to beginning of the page (page2)
+  - get the username from cookie and save it against him
+  - don't forget that this is also a protected route and so cookie auth_token needs validation
 
 
 
