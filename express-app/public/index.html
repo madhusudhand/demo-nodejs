@@ -11,8 +11,8 @@
 
   <script>
     function getData() {
-      const username = document.getElementById('input').value
-      const url = `http://localhost:3000/users/${username}`;
+      // const username = document.getElementById('input').value
+      const url = `http://localhost:3000/documents`;
       const res = document.getElementById('result');
       fetch(url).then((data) => {
         data.json().then(jsonData => {

@@ -12,7 +12,8 @@
 
 ## Exericise extension
 
-login - local storage
+login - local storage (cookies)
+auth_token: sha1(username,password)
 
 Mock Facebook
 UI

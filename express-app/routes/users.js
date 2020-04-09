@@ -9,18 +9,6 @@ router.get('/', function(req, res, next) {
   res.status(301).header({ Location: '/users/details'}).send({});
 });
 
-router.get('/:username', function(req, res, next) {
-  console.log(req.headers);
-  const pathParams = req.params;
-  const user = getUser(pathParams.username);
-  if (!user) {
-    return res.send('User not found'); 
-  }
-  res.setHeader('content-type', 'applicaton/json');
-  const result = JSON.stringify({ message: 'Hello from ' + user.fullName});
-  res.send(result);
-});
-
 router.get('/details', function(req, res, next) {
   console.log(req.query);
   const queryParams = req.query;
@@ -31,21 +19,23 @@ router.get('/details', function(req, res, next) {
   res.send('Hello from ' + user.fullName);
 });
 
-router.post('/login', (req, res) => {
-  const cred = req.body;
-  const headers = req.headers;
+router.get('/login', (req, res) => {
+  res.cookie('is_loggedin', 'yes');
+  res.cookie('auth_token', 'qwertyuio', {httpOnly: true, maxAge: 1000000});
+  res.send(200);
+});
 
-  console.log(headers.authorization);
-
-  if (!cred.username || !cred.password) {
-    // reject
-    return res.status(400).send({ status: 'not ok'});
+router.get('/:username', function(req, res) {
+  // console.log(req.headers);
+  const pathParams = req.params;
+  const user = getUser(pathParams.username);
+  if (!user) {
+    return res.send('User not found'); 
   }
 
-  const isValid = checkLogin(cred.username, cred.password);
-  res.status(200).send({
-    status: isValid?'ok':'invalid',
-  });
+  // res.setHeader('content-type', 'applicaton/json');
+  // const result = JSON.stringify({ message: 'Hello from ' + user.fullName});
+  res.send('Hello');
 });
 
 module.exports = router;

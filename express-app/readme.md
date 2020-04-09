@@ -53,3 +53,19 @@ set - res.status(code)
 /hello
 
 ```
+
+
+
+/login - GET [form un, pw]
+/login - POST [un, pw]
+  - auth > validate un.pw
+  - generate rand token and store in db (user_session)
+  - send a cookie (auth_token)
+
+/user/profile
+  - GET
+  - middleware (recieve cookie auth_token)
+  - validate (if set / query user_session for token against username)
+  - if exists - ok (next())
+  - reject
+  - cb (which gives user details)
