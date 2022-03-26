@@ -15,7 +15,7 @@
   "author": "madhu",
   "license": "MIT",
   "dependencies": {
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.6"
   },
   "devDependencies": {
     "colors": "^1.4.0",
